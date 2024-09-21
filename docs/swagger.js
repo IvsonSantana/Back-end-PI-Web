@@ -4,9 +4,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDefinition = {
   openapi: '3.0.0',
   info: {
-    title: 'API de Gestão de Plantações e Inspeções',
+    title: 'API do Portal do Aluno MedioTEC',
     version: '1.0.0',
-    description: 'API para gerenciar usuários, plantações e inspeções',
+    description: 'API do portal do MedioTEC',
   },
   servers: [
     {
@@ -38,5 +38,5 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = (app) => {
-  app.use('/api/portal-aluno-medio-tec', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use('/api/doc-portal-aluno-medio-tec', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
