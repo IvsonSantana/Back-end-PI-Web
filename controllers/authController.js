@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/userModel');
+const User = require('../models/userModels');
 const config = require('../config/jwt');
 
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { login, password } = req.body;
+    const user = await User.findOne({ login });
     if (!user || !(await user.comparePassword(password))) {
       return res.status(401).json({ message: 'Credenciais Invalidas' });
     }
