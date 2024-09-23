@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const comunicadoController = require('../controllers/comunicadoController');
+const comunicadoController = require('../controllers/comunicadosController');
 
 /**
  * @swagger
