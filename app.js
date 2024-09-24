@@ -13,7 +13,7 @@ const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const conceitoRoutes = require('./routes/conceitoRoutes');
 const comunicadosRoutes = require('./routes/comunicadosRoutes');  
 const alunosTurmasRoutes = require('./routes/alunosTurmasRoutes');
-const authRoutes = require('./routes/authRoutes');
+//const authRoutes = require('./routes/authRoutes');//
 
 dotenv.config();
 
@@ -31,7 +31,7 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/api/auth', authRoutes);
+//app.use('/api/auth', authRoutes);//
 app.use('/api/users', userRoutes);
 app.use('/api/turmas', turmaRoutes);
 app.use('/api/turmaDisciplinas', turmaDisciplinasRoutes);
