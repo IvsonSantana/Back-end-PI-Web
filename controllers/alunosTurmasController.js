@@ -52,26 +52,3 @@ exports.deleteAlunosTurma = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
-exports.getAlunosTurmaByUserId = async (req, res) => {
-    try {
-      const { userId } = req.params;
-  
-      // Verifique se o usuário existe
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'Usuário não encontrado' });
-      }
-  
-      // Encontre todas as turmas associadas a esse usuário (aluno)
-      const alunoTurmas = await AlunosTurma.find({ user: userId }).populate('turma');
-  
-      if (alunoTurmas.length === 0) {
-        return res.status(404).json({ message: 'Nenhuma turma encontrada para esse aluno' });
-      }
-  
-      res.status(200).json(alunoTurmas);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };

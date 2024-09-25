@@ -64,7 +64,7 @@ exports.getProfessoresDisciplinaByUserId = async (req, res) => {
       }
   
       // Encontre todas as disciplina associadas a esse usuário (professor)
-      const professoresDisciplina = await AlunosTurma.find({ user: userId }).populate('disciplina');
+      const professoresDisciplina = await AlunosTurma.find({ user: userId }).populate('disciplina').populate('user');
   
       if (professoresDisciplinas.length === 0) {
         return res.status(404).json({ message: 'Nenhuma disciplina encontrada para esse professor' });

@@ -144,31 +144,4 @@ router.put('/alunosturmas/:id', alunosTurmasController.updateAlunosTurma);
  */
 router.delete('/alunosturmas/:id', alunosTurmasController.deleteAlunosTurma);
 
-/**
- * @swagger
- * /alunosturmas/por-user/{userId}:
- *   get:
- *     summary: Retorna todas as turmas associadas a um aluno
- *     tags: [AlunosTurmas]
- *     parameters:
- *       - in: path
- *         name: userId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID do aluno (usuário)
- *     responses:
- *       200:
- *         description: Lista de turmas associadas ao aluno.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/AlunosTurmas'
- *       404:
- *         description: Nenhuma turma encontrada para esse aluno.
- */
-router.get('/alunosturmas/por-user/:userId', alunosTurmasController.getAlunosTurmaByUserId);
-
 module.exports = router;

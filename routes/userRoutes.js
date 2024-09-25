@@ -21,9 +21,6 @@ const userController = require('../controllers/userController');
  *         nome:
  *           type: string
  *           description: Nome do usuário.
- *         login:
- *           type: string
- *           description: Nome de login do usuário, único.
  *         email:
  *           type: string
  *           description: E-mail do usuário, único.
@@ -32,7 +29,11 @@ const userController = require('../controllers/userController');
  *           description: Senha do usuário (será criptografada).
  *         tipo:
  *           type: string
- *           description: Tipo de usuário (admin, estudante, etc).
+ *           enum:
+ *             - coordenador
+ *             - professor
+ *             - aluno 
+ *           description: Tipo de usuário (coordenador, professor, aluno).
  *         created_at:
  *           type: string
  *           format: date-time
