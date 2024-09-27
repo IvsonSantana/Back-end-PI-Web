@@ -53,3 +53,39 @@ exports.deleteUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getProfessores = async (req, res) => {
+  try {
+    const professores = await User.find({ tipo: 'professor' });
+    if (!professores) {
+      return res.status(404).json({ message: 'Professor não encontrado' });
+    }
+    res.json(professores);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getCoordenadores = async (req, res) => {
+  try {
+    const coordenador = await User.find({ tipo: 'coordenador' });
+    if (!coordenador) {
+      return res.status(404).json({ message: 'Coordenador não encontrado' });
+    }
+    res.json(coordenador);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getAlunos = async (req, res) => {
+  try {
+    const alunos = await User.find({ tipo: 'aluno' });
+    if (!alunos) {
+      return res.status(404).json({ message: 'Aluno não encontrado' });
+    }
+    res.json(alunos);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
