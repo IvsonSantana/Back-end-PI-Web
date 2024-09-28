@@ -93,6 +93,62 @@ router.get('/users/:id', userController.getUserById);
 
 /**
  * @swagger
+ * /coordenadores:
+ *   get:
+ *     summary: Retorna todos os coordenadores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de coordenadores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+router.get('/coordenadores', userController.getCoordenadores)
+
+/**
+ * @swagger
+ * /alunos:
+ *   get:
+ *     summary: Retorna todos os alunos
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de alunos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+
+router.get('/alunos', userController.getAlunos)
+
+/**
+ * @swagger
+ * /professores:
+ *   get:
+ *     summary: Retorna todos os professores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de professores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/professores', userController.getProfessores);
+
+/**
+ * @swagger
  * /users:
  *   post:
  *     summary: Cria um novo usuário
