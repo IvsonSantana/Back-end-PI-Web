@@ -1,8 +1,9 @@
 const Turma = require('../models/turmaModels');
 
+
 exports.getTurmas = async (req, res) => {
   try {
-    const turmas = await Turma.find();
+    const turmas = await Turma.find().populate('aluno').populate('disciplinas');
     res.json(turmas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -11,7 +12,7 @@ exports.getTurmas = async (req, res) => {
 
 exports.getTurmaById = async (req, res) => {
   try {
-    const turma = await Turma.findById(req.params.id);
+    const turma = await Turma.findById(req.params.id).populate('aluno').populate('disciplinas');
     if (!turma) {
       return res.status(404).json({ message: 'Turma não encontrada' });
     }
