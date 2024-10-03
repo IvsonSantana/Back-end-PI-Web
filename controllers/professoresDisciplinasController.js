@@ -1,4 +1,4 @@
-const ProfessoresDisciplina = require('../models/professoresDisciplinas');
+/*const ProfessoresDisciplina = require('../models/professoresDisciplinas');
 const User = require('../models/userModels');
 
 exports.getProfessoresDisciplina = async (req, res) => {
@@ -74,4 +74,4 @@ exports.getProfessoresDisciplinaByUserId = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  };
+  };*/

@@ -1,4 +1,4 @@
-const TurmasDisciplina = require('../models/turmasDisciplinas');
+/*const TurmasDisciplina = require('../models/turmasDisciplinas');
 const Disciplina = require('../models/disciplinaModels');
 
 exports.getTurmasDisciplina = async (req, res) => {
@@ -74,4 +74,4 @@ exports.getTurmasDisciplinaByUserId = async (req, res) => {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  };
+  };*/
