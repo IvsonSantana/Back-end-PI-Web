@@ -215,4 +215,43 @@ router.put('/users/:id', userController.updateUser);
  */
 router.delete('/users/:id', userController.deleteUser);
 
+/**
+ * @swagger
+ * /professores/count:
+ *   get:
+ *     summary: Retorna a contagem de professores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Número de professores cadastrados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: number
+ *                   description: Total de professores.
+ */
+router.get('/professores/count', userController.getProfessoresCount);
+
+/**
+ * @swagger
+ * /alunos/count:
+ *   get:
+ *     summary: Retorna a contagem de alunos
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Número de alunos cadastrados.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: number
+ *                   description: Total de alunos.
+ */
+router.get('/alunos/count', userController.getAlunosCount);
 module.exports = router;

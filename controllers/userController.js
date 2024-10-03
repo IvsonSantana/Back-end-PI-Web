@@ -89,3 +89,22 @@ exports.getAlunos = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getProfessoresCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ tipo: 'professor' });
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getAlunosCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ tipo: 'aluno' });
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

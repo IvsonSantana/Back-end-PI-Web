@@ -37,8 +37,13 @@ const router = express.Router();
  *                     type: string
  *                   ano:
  *                     type: number
- *                   semestre:
+ *                   serie:
  *                     type: string
+ *                     enum:
+ *                       - 1º Ano
+ *                       - 2º Ano
+ *                       - 3º Ano 
+ *                     description: Tipo de usuário (1º Ano, 3º Ano, 3º Ano).
  *                   created_at:
  *                     type: string
  *                     format: date-time
@@ -72,8 +77,13 @@ router.get('/', getTurmas);
  *                   type: string
  *                 ano:
  *                   type: number
- *                 semestre:
+ *                 serie:
  *                   type: string
+ *                   enum:
+ *                     - 1º Ano
+ *                     - 2º Ano
+ *                     - 3º Ano 
+ *                   description: Tipo de usuário (1º Ano, 3º Ano, 3º Ano).
  *                 created_at:
  *                   type: string
  *                   format: date-time
@@ -99,8 +109,13 @@ router.get('/:id', getTurmaById);
  *                 type: string
  *               ano:
  *                 type: number
- *               semestre:
+ *               serie:
  *                 type: string
+ *                 enum:
+ *                   - 1º Ano
+ *                   - 2º Ano
+ *                   - 3º Ano 
+ *                 description: Tipo de usuário (1º Ano, 3º Ano, 3º Ano).
  *     responses:
  *       201:
  *         description: Turma criada com sucesso
@@ -115,8 +130,13 @@ router.get('/:id', getTurmaById);
  *                   type: string
  *                 ano:
  *                   type: number
- *                 semestre:
+ *                 serie:
  *                   type: string
+ *                   enum:
+ *                     - 1º Ano
+ *                     - 2º Ano
+ *                     - 3º Ano 
+ *                   description: Tipo de usuário (1º Ano, 3º Ano, 3º Ano).
  *                 created_at:
  *                   type: string
  *                   format: date-time
@@ -149,8 +169,13 @@ router.post('/', createTurma);
  *                 type: string
  *               ano:
  *                 type: number
- *               semestre:
+ *               serie:
  *                 type: string
+ *                 enum:
+ *                   - 1º Ano
+ *                   - 2º Ano
+ *                   - 3º Ano 
+ *                 description: Tipo de usuário (1º Ano, 3º Ano, 3º Ano).
  *     responses:
  *       200:
  *         description: Turma atualizada com sucesso

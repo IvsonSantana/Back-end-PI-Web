@@ -3,10 +3,10 @@ const Conceito = require('../models/conceitoModels');
 // Criar um novo conceito
 exports.createConceito = async (req, res) => {
     try {
-        const { user, disciplina, conceito1, conceito2, conceitoParcial, conceitoRec, conceitoFinal } = req.body;
+        const { aluno, disciplina, conceito1, conceito2, conceitoParcial, conceitoRec, conceitoFinal } = req.body;
 
         const novoConceito = new Conceito({
-            user,
+            aluno,
             disciplina,
             conceito1,
             conceito2,

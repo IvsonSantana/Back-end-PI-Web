@@ -1,4 +1,4 @@
-const AlunosTurma = require('../models/alunosTurmas');
+/*const AlunosTurma = require('../models/alunosTurmas');
 const User = require('../models/userModels');
 
 exports.getAlunosTurma = async (req, res) => {
@@ -52,3 +52,4 @@ exports.deleteAlunosTurma = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+*/
