@@ -10,8 +10,8 @@ const userController = require('../controllers/userController');
  *       type: object
  *       required:
  *         - nome
- *         - login
  *         - email
+ *         - matricula
  *         - password
  *         - tipo
  *       properties:
@@ -24,6 +24,9 @@ const userController = require('../controllers/userController');
  *         email:
  *           type: string
  *           description: E-mail do usuário, único.
+ *         matricula:
+ *           type: string
+ *           description: Matrícula do usuário, única.
  *         password:
  *           type: string
  *           description: Senha do usuário (será criptografada).
@@ -38,7 +41,6 @@ const userController = require('../controllers/userController');
  *           type: string
  *           format: date-time
  *           description: Data de criação do usuário.
- *      
  */
 
 /**
@@ -90,62 +92,6 @@ router.get('/users', userController.getUsers);
  *         description: Usuário não encontrado.
  */
 router.get('/users/:id', userController.getUserById);
-
-/**
- * @swagger
- * /coordenadores:
- *   get:
- *     summary: Retorna todos os coordenadores
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Lista de coordenadores.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-
-router.get('/coordenadores', userController.getCoordenadores)
-
-/**
- * @swagger
- * /alunos:
- *   get:
- *     summary: Retorna todos os alunos
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Lista de alunos.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-
-router.get('/alunos', userController.getAlunos)
-
-/**
- * @swagger
- * /professores:
- *   get:
- *     summary: Retorna todos os professores
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Lista de professores.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/User'
- */
-router.get('/professores', userController.getProfessores);
 
 /**
  * @swagger
@@ -217,6 +163,60 @@ router.delete('/users/:id', userController.deleteUser);
 
 /**
  * @swagger
+ * /coordenadores:
+ *   get:
+ *     summary: Retorna todos os coordenadores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de coordenadores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/coordenadores', userController.getCoordenadores);
+
+/**
+ * @swagger
+ * /alunos:
+ *   get:
+ *     summary: Retorna todos os alunos
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de alunos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/alunos', userController.getAlunos);
+
+/**
+ * @swagger
+ * /professores:
+ *   get:
+ *     summary: Retorna todos os professores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de professores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/professores', userController.getProfessores);
+
+/**
+ * @swagger
  * /professores/count:
  *   get:
  *     summary: Retorna a contagem de professores
@@ -254,4 +254,5 @@ router.get('/professores/count', userController.getProfessoresCount);
  *                   description: Total de alunos.
  */
 router.get('/alunos/count', userController.getAlunosCount);
+
 module.exports = router;

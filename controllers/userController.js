@@ -62,8 +62,8 @@ exports.getProfessores = async (req, res) => {
   try {
     const professores = await User.find({ tipo: 'professor' });
     const disciplinas = await Disciplina.find({ professor: { $in: professores.map(prof => prof._id) } })
-      .populate('turma', 'nome'); // Popula a turma para obter o nome
-    
+      .populate('turma', 'nome'); 
+
     const professoresComTurmasEDisciplinas = professores.map(professor => {
       const disciplinasDoProfessor = disciplinas.filter(disciplina => disciplina.professor.equals(professor._id));
       const turmasAssociadas = disciplinasDoProfessor.map(disciplina => ({
@@ -71,13 +71,16 @@ exports.getProfessores = async (req, res) => {
         nome: disciplina.turma.nome,
       }));
 
+      const turmasUnicas = Array.from(new Set(turmasAssociadas.map(turma => JSON.stringify(turma))))
+        .map(turma => JSON.parse(turma));
+
       return {
         _id: professor._id,
         nome: professor.nome,
-        turmas: Array.from(new Set(turmasAssociadas.map(turma => turma._id))), 
+        turmas: turmasUnicas, 
         disciplinas: disciplinasDoProfessor.map(disciplina => ({
-          id: disciplina._id,  
-          nome: disciplina.nome 
+          id: disciplina._id, 
+          nome: disciplina.nome  
         }))
       };
     });
