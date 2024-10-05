@@ -10,7 +10,6 @@ const disciplinaController = require('../controllers/disciplinaController');
  *       type: object
  *       required:
  *         - nome
- *         - descricao
  *       properties:
  *         id:
  *           type: string
@@ -18,16 +17,12 @@ const disciplinaController = require('../controllers/disciplinaController');
  *         nome:
  *           type: string
  *           description: Nome da disciplina.
- *         descricao:
- *           type: string
- *           description: Descrição da disciplina.
  *         created_at:
  *           type: string
  *           format: date-time
  *           description: Data de criação da disciplina.
  *       example:
  *         nome: Matemática
- *         descricao: Disciplina de matemática básica.
  */
 
 /**
@@ -79,6 +74,45 @@ router.get('/disciplinas', disciplinaController.getDisciplinas);
  *         description: Disciplina não encontrada.
  */
 router.get('/disciplinas/:id', disciplinaController.getDisciplinaById);
+
+/**
+ * @swagger
+ * /api/disciplinas/professor/{professorId}:
+ *   get:
+ *     summary: Retorna todas as disciplinas de um professor pelo ID
+ *     tags: [Disciplinas]
+ *     parameters:
+ *       - in: path
+ *         name: professorId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do professor
+ *     responses:
+ *       200:
+ *         description: Lista de disciplinas do professor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   nome:
+ *                     type: string
+ *                   turma:
+ *                     type: object
+ *                     properties:
+ *                       _id:
+ *                         type: string
+ *                       nome:
+ *                         type: string
+ *       404:
+ *         description: Professor não encontrado ou nenhuma disciplina encontrada
+ */
+router.get('/professor/:professorId', disciplinaController.getDisciplinaByProfessorId);
 
 /**
  * @swagger
@@ -147,5 +181,111 @@ router.put('/disciplinas/:id', disciplinaController.updateDisciplina);
  *         description: Disciplina não encontrada.
  */
 router.delete('/disciplinas/:id', disciplinaController.deleteDisciplina);
+
+/**
+ * @swagger
+ * /disciplinas/{id}/professor:
+ *   put:
+ *     summary: Adiciona um professor à disciplina
+ *     tags: [Disciplinas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID da disciplina
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               professorId:
+ *                 type: string
+ *             required:
+ *               - professorId
+ *     responses:
+ *       200:
+ *         description: Professor adicionado à disciplina com sucesso.
+ *       404:
+ *         description: Disciplina não encontrada ou professor não encontrado.
+ */
+router.put('/disciplinas/:id/professor', disciplinaController.addProfessorToDisciplina);
+
+/**
+ * @swagger
+ * /disciplinas/{id}/professor:
+ *   delete:
+ *     summary: Remove um professor da disciplina
+ *     tags: [Disciplinas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID da disciplina
+ *     responses:
+ *       200:
+ *         description: Professor removido da disciplina com sucesso.
+ *       404:
+ *         description: Disciplina não encontrada.
+ */
+router.delete('/disciplinas/:id/professor', disciplinaController.removeProfessorFromDisciplina);
+
+/**
+ * @swagger
+ * /disciplinas/{id}/turma:
+ *   put:
+ *     summary: Adiciona uma turma à disciplina
+ *     tags: [Disciplinas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID da disciplina
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               turmaId:
+ *                 type: string
+ *             required:
+ *               - turmaId
+ *     responses:
+ *       200:
+ *         description: Turma adicionada à disciplina com sucesso.
+ *       404:
+ *         description: Disciplina não encontrada ou turma não encontrada.
+ */
+router.put('/disciplinas/:id/turma', disciplinaController.addTurmaToDisciplina);
+
+/**
+ * @swagger
+ * /disciplinas/{id}/turma:
+ *   delete:
+ *     summary: Remove uma turma da disciplina
+ *     tags: [Disciplinas]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID da disciplina
+ *     responses:
+ *       200:
+ *         description: Turma removida da disciplina com sucesso.
+ *       404:
+ *         description: Disciplina não encontrada.
+ */
+router.delete('/disciplinas/:id/turma', disciplinaController.removeTurmaFromDisciplina);
 
 module.exports = router;
