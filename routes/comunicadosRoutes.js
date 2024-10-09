@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const comunicadoController = require('../controllers/comunicadosController');
+const  authGeral = require('../middleware/authGeral');
+
 
 /**
  * @swagger
@@ -22,9 +24,6 @@ const comunicadoController = require('../controllers/comunicadosController');
  *         conteudo:
  *           type: string
  *           description: Conteúdo do comunicado.
- *         user:
- *           type: string
- *           description: ID do usuário associado ao comunicado.
  *         created_at:
  *           type: string
  *           format: date-time
@@ -58,7 +57,7 @@ const comunicadoController = require('../controllers/comunicadosController');
  *               items:
  *                 $ref: '#/components/schemas/Comunicado'
  */
-router.get('/comunicados', comunicadoController.getComunicados);
+router.get('/comunicados', authGeral, comunicadoController.getComunicados);
 
 /**
  * @swagger
@@ -83,7 +82,7 @@ router.get('/comunicados', comunicadoController.getComunicados);
  *       404:
  *         description: Comunicado não encontrado.
  */
-router.get('/comunicados/:id', comunicadoController.getComunicadoById);
+router.get('/comunicados/:id', authGeral, comunicadoController.getComunicadoById);
 
 /**
  * @swagger
@@ -110,7 +109,7 @@ router.get('/comunicados/:id', comunicadoController.getComunicadoById);
  *       404:
  *         description: Usuário não encontrado.
  */
-router.get('/comunicados/user/:userId', comunicadoController.getComunicadoByUserId);
+router.get('/comunicados/user/:userId', authGeral, comunicadoController.getComunicadoByUserId);
 
 /**
  * @swagger
@@ -130,7 +129,7 @@ router.get('/comunicados/user/:userId', comunicadoController.getComunicadoByUser
  *       400:
  *         description: Erro de validação ou requisição.
  */
-router.post('/comunicados', comunicadoController.createComunicado);
+router.post('/comunicados', authGeral, comunicadoController.createComunicado);
 
 /**
  * @swagger
@@ -157,7 +156,7 @@ router.post('/comunicados', comunicadoController.createComunicado);
  *       404:
  *         description: Comunicado não encontrado.
  */
-router.put('/comunicados/:id', comunicadoController.updateComunicado);
+router.put('/comunicados/:id', authGeral, comunicadoController.updateComunicado);
 
 /**
  * @swagger
@@ -178,6 +177,6 @@ router.put('/comunicados/:id', comunicadoController.updateComunicado);
  *       404:
  *         description: Comunicado não encontrado.
  */
-router.delete('/comunicados/:id', comunicadoController.deleteComunicado);
+router.delete('/comunicados/:id', authGeral, comunicadoController.deleteComunicado);
 
 module.exports = router;
