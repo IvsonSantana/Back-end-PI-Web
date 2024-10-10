@@ -221,27 +221,10 @@ router.get('/professores', userController.getProfessores);
  *       400:
  *         description: Erro de validação ou requisição.
  */
-router.post('/users', authCoordenador, userController.createUser);
+router.post('/users',  userController.createUser);
 
-/**
- * @swagger
- * /users/coord:
- *   post:
- *     summary: Cria um novo usuário coordenador
- *     tags: [Users]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/User'
- *     responses:
- *       201:
- *         description: Coordenador criado com sucesso.
- *       400:
- *         description: Erro de validação ou requisição.
- */
-router.post('/users/coord', userController.createUser);
+
+//router.post('/users/coord', userController.createUser);//
 
 /**
  * @swagger
@@ -309,7 +292,7 @@ router.delete('/users/:id', authCoordenador, userController.deleteUser);
  *                   type: integer
  *                   description: Número total de professores.
  */
-router.get('/professores/count', userController.getProfessoresCount);
+router.get('/professores/count', authGeral,userController.getProfessoresCount);
 
 /**
  * @swagger
@@ -329,6 +312,6 @@ router.get('/professores/count', userController.getProfessoresCount);
  *                   type: integer
  *                   description: Número total de alunos.
  */
-router.get('/alunos/count', userController.getAlunosCount);
+router.get('/alunos/count', authGeral, userController.getAlunosCount);
 
 module.exports = router;

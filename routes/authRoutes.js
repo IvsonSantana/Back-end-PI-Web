@@ -1,5 +1,5 @@
 const express = require('express');
-const { login } = require('../controllers/authController');
+const {register, login } = require('../controllers/authController');
 const router = express.Router();
 
 /**
@@ -26,5 +26,7 @@ const router = express.Router();
  *         description: Credenciais inválidas
  */
 router.post('/login', login);
+
+router.post('/users/coord', register)
 
 module.exports = router;
