@@ -10,9 +10,14 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'https://back-end-pi-web-mediotec.onrender.com',
+      url: 'http://localhost:10000',
       description: 'Servidor de Desenvolvimento',
     },
+    {
+      url: 'https://seu-dominio-render.com', 
+      description: 'Servidor de Produção',
+    },
+  
   ],
   components: {
     securitySchemes: {
