@@ -14,7 +14,7 @@ const swaggerDefinition = {
       description: 'Servidor de Desenvolvimento',
     },
     {
-      url: 'https://seu-dominio-render.com', 
+      url: 'https://back-end-pi-web.onrender.com', 
       description: 'Servidor de Produção',
     },
   
