@@ -292,7 +292,7 @@ router.delete('/users/:id', authCoordenador, userController.deleteUser);
  *                   type: integer
  *                   description: Número total de professores.
  */
-router.get('/professores/count', authGeral,userController.getProfessoresCount);
+router.get('/professores/count', userController.getProfessoresCount);
 
 /**
  * @swagger
@@ -312,6 +312,6 @@ router.get('/professores/count', authGeral,userController.getProfessoresCount);
  *                   type: integer
  *                   description: Número total de alunos.
  */
-router.get('/alunos/count', authGeral, userController.getAlunosCount);
+router.get('/alunos/count', userController.getAlunosCount);
 
 module.exports = router;
