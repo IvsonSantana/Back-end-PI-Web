@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const authCoordenador = require('../middleware/coordenadorMiddleware');
+const authProfessor  = require('../middleware/professorMiddleware');
+const authGeral = require('../middleware/authGeral');
 
 /**
  * @swagger
@@ -10,7 +13,6 @@ const userController = require('../controllers/userController');
  *       type: object
  *       required:
  *         - nome
- *         - login
  *         - email
  *         - password
  *         - tipo
@@ -44,8 +46,8 @@ const userController = require('../controllers/userController');
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: API de gerenciamento de usuários
+ *   - name: Users
+ *     description: API de gerenciamento de usuários
  */
 
 /**
@@ -64,7 +66,7 @@ const userController = require('../controllers/userController');
  *               items:
  *                 $ref: '#/components/schemas/User'
  */
-router.get('/users', userController.getUsers);
+router.get('/users', authGeral, userController.getUsers);
 
 /**
  * @swagger
@@ -89,7 +91,61 @@ router.get('/users', userController.getUsers);
  *       404:
  *         description: Usuário não encontrado.
  */
-router.get('/users/:id', userController.getUserById);
+router.get('/users/:id', authGeral, userController.getUserById);
+
+/**
+ * @swagger
+ * /professores:
+ *   get:
+ *     summary: Retorna todos os professores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de todos os professores com suas turmas e disciplinas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/professores', authCoordenador, userController.getProfessores);
+
+/**
+ * @swagger
+ * /coordenadores:
+ *   get:
+ *     summary: Retorna todos os coordenadores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de todos os coordenadores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/coordenadores', authCoordenador, userController.getCoordenadores);
+
+/**
+ * @swagger
+ * /alunos:
+ *   get:
+ *     summary: Retorna todos os alunos
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Lista de todos os alunos com suas turmas e disciplinas.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+router.get('/alunos', authGeral, userController.getAlunos);
 
 /**
  * @swagger
@@ -165,7 +221,27 @@ router.get('/professores', userController.getProfessores);
  *       400:
  *         description: Erro de validação ou requisição.
  */
-router.post('/users', userController.createUser);
+router.post('/users', authCoordenador, userController.createUser);
+
+/**
+ * @swagger
+ * /users/coord:
+ *   post:
+ *     summary: Cria um novo usuário coordenador
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: Coordenador criado com sucesso.
+ *       400:
+ *         description: Erro de validação ou requisição.
+ */
+router.post('/users/coord', userController.createUser);
 
 /**
  * @swagger
@@ -192,7 +268,7 @@ router.post('/users', userController.createUser);
  *       404:
  *         description: Usuário não encontrado.
  */
-router.put('/users/:id', userController.updateUser);
+router.put('/users/:id', authCoordenador, userController.updateUser);
 
 /**
  * @swagger
@@ -213,6 +289,46 @@ router.put('/users/:id', userController.updateUser);
  *       404:
  *         description: Usuário não encontrado.
  */
-router.delete('/users/:id', userController.deleteUser);
+router.delete('/users/:id', authCoordenador, userController.deleteUser);
+
+/**
+ * @swagger
+ * /professores/count:
+ *   get:
+ *     summary: Retorna a quantidade de professores
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Quantidade de professores.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: integer
+ *                   description: Número total de professores.
+ */
+router.get('/professores/count', userController.getProfessoresCount);
+
+/**
+ * @swagger
+ * /alunos/count:
+ *   get:
+ *     summary: Retorna a quantidade de alunos
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Quantidade de alunos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 count:
+ *                   type: integer
+ *                   description: Número total de alunos.
+ */
+router.get('/alunos/count', userController.getAlunosCount);
 
 module.exports = router;

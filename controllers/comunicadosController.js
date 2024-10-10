@@ -3,7 +3,7 @@ const User = require('../models/userModels');
 
 exports.getComunicados = async (req, res) => {
   try {
-    const comunicados = await Comunicado.find().populate('user');
+    const comunicados = await Comunicado.find();
     res.json(comunicados);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -12,7 +12,7 @@ exports.getComunicados = async (req, res) => {
 
 exports.getComunicadoById = async (req, res) => {
   try {
-    const comunicado = await Comunicado.findById(req.params.id).populate('user');
+    const comunicado = await Comunicado.findById(req.params.id);
     if (!comunicado) {
       return res.status(404).json({ message: 'Comunicado não encontrada' });
     }

@@ -1,4 +1,8 @@
 const User = require('../models/userModels');
+const Turma = require('../models/turmaModels');
+const Disciplina = require('../models/disciplinaModels'); 
+
+
 
 exports.getUsers = async (req, res) => {
   try {
@@ -23,8 +27,8 @@ exports.getUserById = async (req, res) => {
 
 exports.createUser = async (req, res) => {
   try {
-    const { nome, login, password, email, tipo  } = req.body;
-    const user = new User({ nome,login, password, email, tipo });
+    const { nome, password, email, tipo  } = req.body;
+    const user = new User({ nome, password, email, tipo });
     await user.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -57,14 +61,37 @@ exports.deleteUser = async (req, res) => {
 exports.getProfessores = async (req, res) => {
   try {
     const professores = await User.find({ tipo: 'professor' });
-    if (!professores) {
-      return res.status(404).json({ message: 'Professor não encontrado' });
-    }
-    res.json(professores);
+    const disciplinas = await Disciplina.find({ professor: { $in: professores.map(prof => prof._id) } })
+      .populate('turma', 'nome'); 
+
+    const professoresComTurmasEDisciplinas = professores.map(professor => {
+      const disciplinasDoProfessor = disciplinas.filter(disciplina => disciplina.professor.equals(professor._id));
+      const turmasAssociadas = disciplinasDoProfessor.map(disciplina => ({
+        _id: disciplina.turma._id,
+        nome: disciplina.turma.nome,
+      }));
+
+      const turmasUnicas = Array.from(new Set(turmasAssociadas.map(turma => JSON.stringify(turma))))
+        .map(turma => JSON.parse(turma));
+
+      return {
+        _id: professor._id,
+        nome: professor.nome,
+        email: professor.email,
+        turmas: turmasUnicas, 
+        disciplinas: disciplinasDoProfessor.map(disciplina => ({
+          id: disciplina._id, 
+          nome: disciplina.nome  
+        }))
+      };
+    });
+
+    res.json(professoresComTurmasEDisciplinas);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 exports.getCoordenadores = async (req, res) => {
   try {
@@ -81,10 +108,47 @@ exports.getCoordenadores = async (req, res) => {
 exports.getAlunos = async (req, res) => {
   try {
     const alunos = await User.find({ tipo: 'aluno' });
-    if (!alunos) {
-      return res.status(404).json({ message: 'Aluno não encontrado' });
-    }
-    res.json(alunos);
+    const turmas = await Turma.find({ aluno: { $in: alunos.map(aluno => aluno._id) } })
+      .populate('disciplinas', 'nome'); 
+
+    const alunosComTurmas = alunos.map(aluno => {
+      const turmaDoAluno = turmas.find(turma => turma.aluno.includes(aluno._id));
+      return {
+        _id: aluno._id,
+        nome: aluno.nome,
+        email: aluno.email,
+        turma: turmaDoAluno 
+          ? { 
+              _id: turmaDoAluno._id, 
+              nome: turmaDoAluno.nome,
+              disciplinas: turmaDoAluno.disciplinas.map(disciplina => disciplina.nome) 
+            } 
+          : null, 
+      };
+    });
+
+    res.json(alunosComTurmas);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+exports.getProfessoresCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ tipo: 'professor' });
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+exports.getAlunosCount = async (req, res) => {
+  try {
+    const count = await User.countDocuments({ tipo: 'aluno' });
+    res.json({ count });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

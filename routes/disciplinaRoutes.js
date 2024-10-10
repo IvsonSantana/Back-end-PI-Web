@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const disciplinaController = require('../controllers/disciplinaController');
+const authCoordenador = require('../middleware/coordenadorMiddleware');
+const authProfessor  = require('../middleware/professorMiddleware');
+const  authGeral = require('../middleware/authGeral');
 
 /**
  * @swagger
@@ -10,7 +13,8 @@ const disciplinaController = require('../controllers/disciplinaController');
  *       type: object
  *       required:
  *         - nome
- *         - descricao
+ *         - professor
+ *         - turma
  *       properties:
  *         id:
  *           type: string
@@ -18,16 +22,20 @@ const disciplinaController = require('../controllers/disciplinaController');
  *         nome:
  *           type: string
  *           description: Nome da disciplina.
- *         descricao:
+ *         professor:
  *           type: string
- *           description: Descrição da disciplina.
+ *           description: ID do professor associado à disciplina.
+ *         turma:
+ *           type: string
+ *           description: ID da turma associada à disciplina.
  *         created_at:
  *           type: string
  *           format: date-time
  *           description: Data de criação da disciplina.
  *       example:
  *         nome: Matemática
- *         descricao: Disciplina de matemática básica.
+ *         professor: "63f84c9e3b1f1d4e20c64c62"  # Exemplo de ID de professor
+ *         turma: "63f84c9e3b1f1d4e20c64c63"    # Exemplo de ID de turma
  */
 
 /**
@@ -45,40 +53,34 @@ const disciplinaController = require('../controllers/disciplinaController');
  *     tags: [Disciplinas]
  *     responses:
  *       200:
- *         description: Lista de todas as disciplinas.
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Disciplina'
+ *         description: Lista de disciplinas
+ *       500:
+ *         description: Erro ao buscar disciplinas
  */
-router.get('/disciplinas', disciplinaController.getDisciplinas);
+router.get('/disciplinas', authGeral, disciplinaController.getDisciplinas);
 
 /**
  * @swagger
  * /disciplinas/{id}:
  *   get:
- *     summary: Retorna uma disciplina por ID
+ *     summary: Retorna uma disciplina específica pelo ID
  *     tags: [Disciplinas]
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: ID da disciplina
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Dados da disciplina.
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Disciplina'
+ *         description: Disciplina encontrada
  *       404:
- *         description: Disciplina não encontrada.
+ *         description: Disciplina não encontrada
+ *       500:
+ *         description: Erro ao buscar disciplina
  */
-router.get('/disciplinas/:id', disciplinaController.getDisciplinaById);
+router.get('/disciplinas/:id', authGeral, disciplinaController.getDisciplinaById);
 
 /**
  * @swagger
@@ -91,61 +93,87 @@ router.get('/disciplinas/:id', disciplinaController.getDisciplinaById);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Disciplina'
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 description: Nome da disciplina
+ *               professor:
+ *                 type: string
+ *                 description: ID do professor
+ *               turma:
+ *                 type: string
+ *                 description: ID da turma
  *     responses:
  *       201:
- *         description: Disciplina criada com sucesso.
- *       400:
- *         description: Erro de validação ou requisição.
+ *         description: Disciplina criada com sucesso
+ *       404:
+ *         description: Turma não encontrada
+ *       500:
+ *         description: Erro ao criar disciplina
  */
-router.post('/disciplinas', disciplinaController.createDisciplina);
+router.post('/disciplinas', authCoordenador,disciplinaController.createDisciplina);
 
 /**
  * @swagger
  * /disciplinas/{id}:
  *   put:
- *     summary: Atualiza uma disciplina existente
+ *     summary: Atualiza uma disciplina existente pelo ID
  *     tags: [Disciplinas]
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: ID da disciplina
+ *         schema:
+ *           type: string
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Disciplina'
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 description: Nome da disciplina
+ *               professor:
+ *                 type: string
+ *                 description: ID do professor
+ *               turma:
+ *                 type: string
+ *                 description: ID da turma
  *     responses:
  *       200:
- *         description: Disciplina atualizada com sucesso.
+ *         description: Disciplina atualizada com sucesso
  *       404:
- *         description: Disciplina não encontrada.
+ *         description: Disciplina não encontrada
+ *       500:
+ *         description: Erro ao atualizar disciplina
  */
-router.put('/disciplinas/:id', disciplinaController.updateDisciplina);
+router.put('/disciplinas/:id', authCoordenador,disciplinaController.updateDisciplina);
 
 /**
  * @swagger
  * /disciplinas/{id}:
  *   delete:
- *     summary: Deleta uma disciplina
+ *     summary: Deleta uma disciplina pelo ID
  *     tags: [Disciplinas]
  *     parameters:
  *       - in: path
  *         name: id
- *         schema:
- *           type: string
  *         required: true
  *         description: ID da disciplina
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Disciplina deletada com sucesso.
+ *         description: Disciplina deletada com sucesso
  *       404:
- *         description: Disciplina não encontrada.
+ *         description: Disciplina não encontrada
+ *       500:
+ *         description: Erro ao deletar disciplina
  */
-router.delete('/disciplinas/:id', disciplinaController.deleteDisciplina);
+router.delete('/disciplinas/:id', authCoordenador, disciplinaController.deleteDisciplina);
 
 module.exports = router;
