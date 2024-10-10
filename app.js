@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors')
 const helmet = require('helmet');
 const dotenv = require('dotenv');
 const connectDB = require('./config/database');
@@ -19,11 +20,7 @@ const app = express();
 
 app.use(helmet());
 
-const corsOptions = {
-  origin: 'https://portaldoalunomediotec.netlify.app', // Substitua pelo domínio do seu frontend
-  optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(morgan('dev'));
 
