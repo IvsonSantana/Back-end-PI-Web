@@ -10,7 +10,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: 'http://localhost:3000',
+      url: 'https://back-end-pi-web-mediotec.onrender.com',
       description: 'Servidor de Desenvolvimento',
     },
   ],
