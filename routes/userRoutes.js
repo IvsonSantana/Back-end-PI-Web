@@ -165,7 +165,7 @@ router.get('/alunos', authGeral, userController.getAlunos);
  *       400:
  *         description: Erro de validação ou requisição.
  */
-router.post('/users',  userController.createUser);
+router.post('/users', authCoordenador,  userController.createUser);
 
 
 //router.post('/users/coord', userController.createUser);//
