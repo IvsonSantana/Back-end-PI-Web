@@ -38,7 +38,7 @@ app.use('/api/comunicados', comunicadosRoutes);
 swaggerSetup(app);
 // http://localhost:3000/api/portal-aluno-medio-tec
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta: ${PORT}`);
